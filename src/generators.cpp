@@ -179,6 +179,8 @@ std::string to_string(DeviceType device_type) {
       return "WebGpu";
     case DeviceType::QNN:
       return "QnnWithSharedMemory";
+    case DeviceType::OPENVINO:
+      return "OpenVINO";
   }
   throw std::runtime_error("Unknown device type");
 }

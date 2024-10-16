@@ -62,6 +62,7 @@ enum struct DeviceType {
   DML,
   WEBGPU,
   QNN,
+  OPENVINO
 };
 
 std::string to_string(DeviceType device_type);
