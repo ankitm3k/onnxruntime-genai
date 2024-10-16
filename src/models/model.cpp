@@ -397,7 +397,12 @@ void Model::CreateSessionOptionsFromConfig(const Config::SessionOptions& config_
       // Only use the primary session options to determine the device type
       if (is_primary_session_options)
         device_type_ = DeviceType::CUDA;  // Scoring will use CUDA
-
+    } else if (provider_options.name == "openvino") {
+      std::unordered_map<std::string, std::string> ov_options;
+      for (auto& option : provider_options.options) {
+        ov_options.emplace(option.first, option.second);
+      }      
+      session_options.AppendExecutionProvider("OpenVINO", ov_options);
     } else if (provider_options.name == "rocm") {
       OrtROCMProviderOptions ort_provider_options;
 

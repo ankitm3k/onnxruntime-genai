@@ -52,6 +52,7 @@ enum struct DeviceType {
   CPU,
   CUDA,
   DML,
+  OPENVINO
 };
 
 std::string to_string(DeviceType device_type);
