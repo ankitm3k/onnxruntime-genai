@@ -43,6 +43,8 @@ include(cmake/check_rocm.cmake)
 include(cmake/check_dml.cmake)
 # Checking if WebGpu is supported
 include(cmake/check_webgpu.cmake)
+# Checking if OpenVINO is supported
+include(cmake/check_openvino.cmake)
 
 include(cmake/cxx_standard.cmake)
 

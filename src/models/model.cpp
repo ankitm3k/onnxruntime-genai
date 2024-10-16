@@ -421,7 +421,6 @@ void Model::CreateSessionOptionsFromConfig(const Config::SessionOptions& config_
       }
 
       session_options.AppendExecutionProvider_CUDA_V2(*ort_provider_options);
-
     } else if (provider_options.name == "rocm") {
       OrtROCMProviderOptions ort_provider_options;
 
@@ -491,6 +490,12 @@ void Model::CreateSessionOptionsFromConfig(const Config::SessionOptions& config_
         opts.emplace(option.first, option.second);
       }
       session_options.AppendExecutionProvider("WebGPU", opts);
+    } else if (provider_options.name == "openvino") {
+      std::unordered_map<std::string, std::string> ov_options;
+      for (auto& option : provider_options.options) {
+        ov_options.emplace(option.first, option.second);
+      }      
+      session_options.AppendExecutionProvider("OpenVINO", ov_options);
     } else
       throw std::runtime_error("Unknown provider type: " + provider_options.name);
   }

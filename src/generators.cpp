@@ -165,6 +165,8 @@ std::string to_string(DeviceType device_type) {
       return "DirectML";
     case DeviceType::WEBGPU:
       return "WebGpu";
+    case DeviceType::OPENVINO:
+      return "OpenVINO";
   }
   throw std::runtime_error("Unknown device type");
 }
