@@ -29,6 +29,9 @@ if og.is_dml_available():
 if og.is_rocm_available():
     devices.append("rocm")
 
+if og.is_openvino_available():
+    devices.append("openvino")
+
 
 @pytest.mark.parametrize(
     "relative_model_path",
