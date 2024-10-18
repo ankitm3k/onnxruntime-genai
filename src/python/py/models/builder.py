@@ -66,6 +66,7 @@ class Model:
             },
             "dml": {},
             "webgpu": {},
+            "openvino": {},
         }
 
         # Map input names to their types and shapes
@@ -248,6 +249,7 @@ class Model:
             ("dml", TensorProto.FLOAT16),
             ("webgpu", TensorProto.FLOAT16),
             ("webgpu", TensorProto.FLOAT),
+            ("openvino", TensorProto.FLOAT16),
         ]
         if (self.ep, self.io_dtype) in valid_gqa_configurations:
             # Change model settings for GroupQueryAttention
@@ -3328,7 +3330,7 @@ def get_args():
         "-e",
         "--execution_provider",
         required=True,
-        choices=["cpu", "cuda", "rocm", "dml", "webgpu"],
+        choices=["cpu", "cuda", "rocm", "dml", "webgpu","openvino"],
         help="Execution provider to target with precision of model (e.g. FP16 CUDA, INT4 CPU, INT4 WEBGPU)",
     )
 
