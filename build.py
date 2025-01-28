@@ -473,9 +473,8 @@ def update(args: argparse.Namespace, env: dict[str, str]):
         "-DCMAKE_POSITION_INDEPENDENT_CODE=ON",
         f"-DUSE_CUDA={'ON' if args.use_cuda else 'OFF'}",
         f"-DUSE_ROCM={'ON' if args.use_rocm else 'OFF'}",
-        f"-DUSE_WEBGPU={'ON' if args.use_webgpu else 'OFF'}",
-        f"-DUSE_OPENVINO={'ON' if args.use_openvino else 'OFF'}",
         f"-DUSE_DML={'ON' if args.use_dml else 'OFF'}",
+        f"-DUSE_OPENVINO={'ON' if args.use_openvino else 'OFF'}",
         f"-DENABLE_JAVA={'ON' if args.build_java else 'OFF'}",
         f"-DBUILD_WHEEL={build_wheel}",
     ]
