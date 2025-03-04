@@ -446,7 +446,7 @@ if __name__ == "__main__":
     parser.add_argument('--use_random_tokens', action='store_true', help='Use random tokens instead of generating a prompt')
     parser.add_argument('--use_prompt_set', action='store_true', help='Use pre-generated prompt set instead of generating a prompt')
     parser.add_argument('--chat_template', type=str, default='', help='Chat template to use for the prompt. User input will be injected into {input}')
-    parser.add_argument('-e', '--execution_provider', type=str, required=True, choices=["cpu", "cuda", "dml"], help='Execution provider to run ONNX model with')
+    parser.add_argument('-e', '--execution_provider', type=str, required=True, choices=["cpu", "cuda", "dml","openvino"], help='Execution provider to run ONNX model with')
     args = parser.parse_args()
 
     # check max_lengths
