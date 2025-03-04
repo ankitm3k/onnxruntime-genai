@@ -12,6 +12,7 @@
 #include "dml/interface.h"
 #include "qnn/interface.h"
 #include "webgpu/interface.h"
+#include "openvino/interface.h"
 
 #if defined(_WIN32)
 EXTERN_C IMAGE_DOS_HEADER __ImageBase;
@@ -231,6 +232,8 @@ DeviceInterface* GetDeviceInterface(DeviceType type) {
       return GetWebGPUInterface();
     case DeviceType::QNN:
       return GetQNNInterface();
+    case DeviceType::OPENVINO:
+      return GetOpenVINOInterface();
   }
 }
 
