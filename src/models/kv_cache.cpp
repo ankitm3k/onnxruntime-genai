@@ -145,6 +145,40 @@ void CombinedKeyValueCache::PickPastState(DeviceSpan<int32_t> beam_indices, int 
   }
 }
 
+ModelManagedKeyValueCache::ModelManagedKeyValueCache(State& state)
+    : state_{state}{}
+
+void ModelManagedKeyValueCache::Add() {
+  // Ideally we want to set beam_idx... but adding it as an input tensor causes a crash.
+  // Perhaps this is because it is not present in native (stateless) ONNX model, but only comes
+  // into existence after ov::Model stateless -> stateful conversion within OV EP.
+  // TODO: Look into this more.
+  #if 0
+  std::array<int64_t, 1> beam_idx_shape;
+  beam_idx_shape[0] = 1;
+
+  auto beam_idx_tensor = OrtValue::CreateTensor(Allocator(), beam_idx_shape, ONNXTensorElementDataType::ONNX_TENSOR_ELEMENT_DATA_TYPE_INT32);
+  int32_t* beam_idx_data = beam_idx_tensor->GetTensorMutableData<int32_t>();
+  *beam_idx_data = 0;
+
+  state_.inputs_.push_back(beam_idx_tensor.get());
+  state_.input_names_.push_back("beam_idx");
+  #endif
+}
+
+void ModelManagedKeyValueCache::AddEncoder() {
+  //TODO..
+}
+
+void ModelManagedKeyValueCache::Update(DeviceSpan<int32_t> beam_indices, int total_length) {
+  // NO-OP for now.
+  // Eventually we would probably set 'beam_idx' tensor here somehow.
+}
+
+void ModelManagedKeyValueCache::RewindTo(size_t index) {
+  //TODO: Figure out how a 'Rewind' operation could work with the KV cache being managed internally.
+}
+
 DefaultKeyValueCache::DefaultKeyValueCache(State& state)
     : state_{state},
       layer_count_{model_.config_->model.decoder.num_hidden_layers},
