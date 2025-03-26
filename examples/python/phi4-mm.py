@@ -6,6 +6,8 @@ import os
 import glob
 import time
 from pathlib import Path
+import onnxruntime.tools.add_openvino_win_libs as ovep_utils
+ovep_utils.add_openvino_libs_to_path()
 
 import onnxruntime_genai as og
 
@@ -55,7 +57,7 @@ def get_paths(modality, user_provided_paths, default_paths, interactive):
 def run(args: argparse.Namespace):
     print("Loading model...")
     config = og.Config(args.model_path)
-    config.clear_providers()
+    # config.clear_providers()
     if args.execution_provider != "cpu":
         print(f"Setting model to {args.execution_provider}...")
         config.append_provider(args.execution_provider)
@@ -155,7 +157,7 @@ if __name__ == "__main__":
         "-m", "--model_path", type=str, required=True, help="Path to the folder containing the model"
     )
     parser.add_argument(
-        "-e", "--execution_provider", type=str, required=True, choices=["cpu", "cuda", "dml"], help="Execution provider to run model"
+        "-e", "--execution_provider", type=str, required=True, choices=["cpu", "cuda", "dml","openvino"], help="Execution provider to run model"
     )
     parser.add_argument(
         "--image_paths", nargs='*', type=str, required=False, help="Path to the images, mainly for CI usage"

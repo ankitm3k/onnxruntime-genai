@@ -23,7 +23,8 @@ import psutil
 import os
 import json
 from metrics import BenchmarkRecord
-
+import onnxruntime.tools.add_openvino_win_libs as ovep_utils
+ovep_utils.add_openvino_libs_to_path()
 import numpy as np
 
 peak_cpu_memory = 0.0
@@ -212,7 +213,7 @@ def run_benchmark(args, batch_size, prompt_length, generation_length, max_length
     # Get tokenizer, and model
     if args.verbose: print("Getting config")
     config = og.Config(f'{args.input_folder}')
-    config.clear_providers()
+    # config.clear_providers()
     if args.verbose: print("Loading model... ")
     if args.execution_provider != "cpu":
         if args.verbose: print(f"Setting model to {args.execution_provider}")

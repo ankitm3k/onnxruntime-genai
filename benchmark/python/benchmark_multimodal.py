@@ -23,6 +23,8 @@ import subprocess
 import threading
 import time
 from tqdm import tqdm
+import onnxruntime.tools.add_openvino_win_libs as ovep_utils
+ovep_utils.add_openvino_libs_to_path()
 
 peak_cpu_memory = 0.0
 peak_gpu_memory = 0.0
