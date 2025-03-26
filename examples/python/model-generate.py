@@ -1,11 +1,13 @@
 import onnxruntime_genai as og
 import argparse
 import time
+import onnxruntime.tools.add_openvino_win_libs as ovep_utils
+ovep_utils.add_openvino_libs_to_path()
 
 def main(args):
     if args.verbose: print("Loading model...")
     config = og.Config(args.model_path)
-    config.clear_providers()
+    # config.clear_providers()
     if args.execution_provider != "cpu":
         if args.verbose:
             print(f"Setting model to {args.execution_provider}...")
@@ -74,7 +76,7 @@ def main(args):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(argument_default=argparse.SUPPRESS, description="End-to-end token generation loop example for gen-ai")
     parser.add_argument('-m', '--model_path', type=str, required=True, help='Onnx model folder path (must contain genai_config.json and model.onnx)')
-    parser.add_argument("-e", "--execution_provider", type=str, required=True, choices=["cpu", "cuda", "dml"], help="Provider to run model")
+    parser.add_argument("-e", "--execution_provider", type=str, required=True, choices=["cpu", "cuda", "dml","openvino"], help="Provider to run model")
     parser.add_argument('-pr', '--prompts', nargs='*', required=False, help='Input prompts to generate tokens from. Provide this parameter multiple times to batch multiple prompts')
     parser.add_argument('-i', '--min_length', type=int, default=25, help='Min number of tokens to generate including the prompt')
     parser.add_argument('-l', '--max_length', type=int, default=50, help='Max number of tokens to generate including the prompt')

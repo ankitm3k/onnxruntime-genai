@@ -17,6 +17,8 @@ import onnxruntime_genai as og
 import time
 import argparse
 from tqdm import tqdm
+import onnxruntime.tools.add_openvino_win_libs as ovep_utils
+ovep_utils.add_openvino_libs_to_path()
 
 def main(args):
     # Get user arguments
