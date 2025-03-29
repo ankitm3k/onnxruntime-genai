@@ -23,7 +23,7 @@ void CXX_API(const char* model_path, const char* execution_provider) {
   std::cout << "Creating config..." << std::endl;
   auto config = OgaConfig::Create(model_path);
 
-  config->ClearProviders();
+  //config->ClearProviders();
   std::string provider(execution_provider);
   if (provider.compare("cpu") != 0) {
     config->AppendProvider(execution_provider);
