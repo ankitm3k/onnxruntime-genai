@@ -176,7 +176,8 @@ void ModelManagedKeyValueCache::Update(DeviceSpan<int32_t> beam_indices, int tot
 }
 
 void ModelManagedKeyValueCache::RewindTo(size_t index) {
-  //TODO: Figure out how a 'Rewind' operation could work with the KV cache being managed internally.
+  // set some ep_dynamic_option key/values to get set within the next State::Run
+  state_._ep_dynamic_options_next_run.push_back({"kvcache_rewind", std::to_string(index)});
 }
 
 DefaultKeyValueCache::DefaultKeyValueCache(State& state)
