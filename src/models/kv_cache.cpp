@@ -149,6 +149,10 @@ ModelManagedKeyValueCache::ModelManagedKeyValueCache(State& state)
     : state_{state}{}
 
 void ModelManagedKeyValueCache::Add() {
+  // It's possible that underlying model (session) is being re-used (i.e. in phi3_qa example),
+  // So, make sure to clear the internal kv cache states.
+  RewindTo(0);
+
   // Ideally we want to set beam_idx... but adding it as an input tensor causes a crash.
   // Perhaps this is because it is not present in native (stateless) ONNX model, but only comes
   // into existence after ov::Model stateless -> stateful conversion within OV EP.
@@ -176,7 +180,8 @@ void ModelManagedKeyValueCache::Update(DeviceSpan<int32_t> beam_indices, int tot
 }
 
 void ModelManagedKeyValueCache::RewindTo(size_t index) {
-  //TODO: Figure out how a 'Rewind' operation could work with the KV cache being managed internally.
+  // set some ep_dynamic_option key/values to get set within the next State::Run
+  state_._ep_dynamic_options_next_run.push_back({"kvcache_rewind", std::to_string(index)});
 }
 
 DefaultKeyValueCache::DefaultKeyValueCache(State& state)
